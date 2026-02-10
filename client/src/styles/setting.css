@@ -1,0 +1,187 @@
+/* ===============================
+   PAGE LAYOUT
+=============================== */
+.settings-page {
+  padding: 24px;
+  background: #f4f5f7;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+/* OUTER CARD (like helpline card) */
+.settings-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.settings-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.settings-header p {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ===============================
+   SETTINGS ITEM - Sub-boxes (helpline style)
+=============================== */
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb; /* light inner box */
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.settings-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* LEFT SIDE */
+.settings-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ICON / AVATAR */
+.settings-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #2563eb; /* default blue */
+  background: #e0e7ff;
+  font-size: 18px;
+}
+
+/* ITEM INFO */
+.settings-info h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.settings-info p {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* RIGHT SIDE - ACTIONS */
+.settings-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* TOGGLE SWITCH */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2563eb;
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+/* ===============================
+   ALERT MESSAGE
+=============================== */
+.alert-msg {
+  background: #f87171;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  animation: fadeInOut 3s forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ===============================
+   LOGOUT BUTTON
+=============================== */
+.logout-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #f87171;
+  background: transparent;
+  color: #f87171;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #f87171;
+  color: white;
+}
