@@ -16,12 +16,15 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 /* ---------- DATABASE ---------- */
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "demo1",
-  password: "2007",
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
+
+pool.connect()
+  .then(() => console.log("✅ Database connected successfully"))
+  .catch(err => console.error("❌ Database connection error:", err));
 
 /* ---------- MULTER ---------- */
 const storage = multer.diskStorage({
@@ -560,8 +563,8 @@ function renderStatusPage(title, message, color) {
 }
 
 /* ================= SERVER ================= */
+const PORT = process.env.PORT || 5000;
 
-const PORT = 5000;
-app.listen(PORT, () =>
-  console.log(`Server running at http://localhost:${PORT}`)
-);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

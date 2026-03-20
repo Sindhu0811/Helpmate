@@ -43,7 +43,7 @@ const OtpVerify = ({ setUser }) => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/verify-otp", {
+      const res = await fetch("https://helpmate-production.up.railway.app/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...signupData, otp: enteredOtp }),
@@ -72,7 +72,7 @@ const OtpVerify = ({ setUser }) => {
 
   const handleResendOtp = async () => {
     try {
-      const res = await fetch("http://localhost:5000/signup", {
+      const res = await fetch("https://helpmate-production.up.railway.app/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signupData),

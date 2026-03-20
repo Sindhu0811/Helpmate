@@ -52,7 +52,7 @@ const ProfilePage = ({ user, setUser }) => {
         setCountries(Country.getAllCountries() || []);
 
         const res = await axios.get(
-          `http://localhost:5000/auth/me?email=${currentUser.email}`
+          `https://helpmate-production.up.railway.app/auth/me?email=${currentUser.email}`
         );
 
         const data = res.data || {};
@@ -163,7 +163,7 @@ const ProfilePage = ({ user, setUser }) => {
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/profile/upload/${profile.email}`,
+        `https://helpmate-production.up.railway.app/profile/upload/${profile.email}`,
         formData
       );
 
@@ -181,7 +181,7 @@ const ProfilePage = ({ user, setUser }) => {
 
   const handleSaveProfile = async () => {
     try {
-      await axios.put(`http://localhost:5000/profile/${profile.email}`, profile);
+      await axios.put(`https://helpmate-production.up.railway.app/profile/${profile.email}`, profile);
 
       localStorage.setItem("user", JSON.stringify(profile));
       setUser(profile);
@@ -223,7 +223,7 @@ const ProfilePage = ({ user, setUser }) => {
                 src={
                   profile.profile_image.startsWith("http")
                     ? profile.profile_image
-                    : `http://localhost:5000${profile.profile_image}`
+                    : `https://helpmate-production.up.railway.app${profile.profile_image}`
                 }
                 alt="profile"
               />

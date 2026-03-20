@@ -5,14 +5,14 @@ import { addAlert } from "./recentAlerts";
 export const sendEmergencyAlert = async (type, userEmail) => {
   try {
     const res = await axios.get(
-      "http://localhost:5000/api/emergency-contacts",
+      "https://helpmate-production.up.railway.app/api/emergency-contacts",
       { params: { email: userEmail } }
     );
 
     const contacts = res.data || [];
 
     // Call backend API to send emails
-    await axios.post("http://localhost:5000/api/send-emails", {
+    await axios.post("https://helpmate-production.up.railway.app/api/send-emails", {
       type,
       contacts,
       userEmail

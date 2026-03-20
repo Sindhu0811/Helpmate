@@ -47,7 +47,7 @@ export default function HomePage() {
     const interval = setInterval(async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/sos-status?userEmail=${user.email}`
+          `https://helpmate-production.up.railway.app/api/sos-status?userEmail=${user.email}`
         );
 
         if (!res.ok) return;
@@ -86,7 +86,7 @@ export default function HomePage() {
     const interval = setInterval(async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/sos-responses-list?userEmail=${user.email}`
+          `https://helpmate-production.up.railway.app/api/sos-responses-list?userEmail=${user.email}`
         );
 
         if (!res.ok) return;
@@ -176,7 +176,7 @@ const triggerSOS = async (type) => {
     try {
       // 1️⃣ Get emergency contacts
       const res = await fetch(
-        `http://localhost:5000/api/emergency-contacts?email=${user.email}`
+        `https://helpmate-production.up.railway.app/api/emergency-contacts?email=${user.email}`
       );
 
       if (!res.ok) throw new Error("Failed to fetch contacts");
@@ -184,7 +184,7 @@ const triggerSOS = async (type) => {
       const contacts = await res.json();
 
       // 2️⃣ Call SOS API (backend now responds immediately)
-      const sosRes = await fetch("http://localhost:5000/api/send-sos-emails", {
+      const sosRes = await fetch("https://helpmate-production.up.railway.app/api/send-sos-emails", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

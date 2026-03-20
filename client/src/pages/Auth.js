@@ -41,7 +41,7 @@ const Auth = ({ setUser }) => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch("https://helpmate-production.up.railway.app/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData),
@@ -80,7 +80,7 @@ const Auth = ({ setUser }) => {
     setShowOtpAnimation(true);
 
     try {
-      const res = await fetch("http://localhost:5000/signup", {
+      const res = await fetch("https://helpmate-production.up.railway.app/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signupData),

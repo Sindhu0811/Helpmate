@@ -26,7 +26,7 @@ const LocationPermission = () => {
         localStorage.setItem("locationAllowed", "true");
 
         // Optional: send to server
-        fetch("http://localhost:5000/update-location", {
+        fetch("https://helpmate-production.up.railway.app/update-location", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(coords),

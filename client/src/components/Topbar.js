@@ -27,7 +27,7 @@ export default function Topbar({ user, activePage }) {
   const profileSrc = user?.profile_image
     ? user.profile_image.startsWith("http")
       ? user.profile_image
-      : `http://localhost:5000${user.profile_image}`
+      : `https://helpmate-production.up.railway.app${user.profile_image}`
     : defaultProfile;
 
   return (

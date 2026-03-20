@@ -2,7 +2,7 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 
 // LOCALHOST only
-const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
+const BASE_URL = process.env.BASE_URL || "https://helpmate-production.up.railway.app";
 
 /* ================= TRANSPORTER ================= */
 const transporter = nodemailer.createTransport({

@@ -29,7 +29,7 @@ const ContactsPage = () => {
     if (!userEmail) return;
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/emergency-contacts",
+        "https://helpmate-production.up.railway.app/api/emergency-contacts",
         { params: { email: userEmail } }
       );
       setContacts(res.data || []);
@@ -67,7 +67,7 @@ const ContactsPage = () => {
     if (editingId) {
       // ✅ UPDATE CONTACT
       await axios.put(
-        `http://localhost:5000/api/emergency-contacts/${editingId}`,
+        `https://helpmate-production.up.railway.app/api/emergency-contacts/${editingId}`,
         {
           userEmail, // send userEmail if backend checks ownership
           name: formData.name,
@@ -83,7 +83,7 @@ const ContactsPage = () => {
     } else {
       // ✅ ADD CONTACT
       await axios.post(
-        "http://localhost:5000/api/emergency-contacts",
+        "https://helpmate-production.up.railway.app/api/emergency-contacts",
         {
           userEmail, // ✅ IMPORTANT FIX
           name: formData.name,
@@ -127,7 +127,7 @@ const ContactsPage = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/emergency-contacts/${deleteModal.id}`
+        `https://helpmate-production.up.railway.app/api/emergency-contacts/${deleteModal.id}`
       );
       setContacts((prev) => prev.filter((c) => c.id !== deleteModal.id));
       toast.success("🗑 Contact deleted successfully!");
