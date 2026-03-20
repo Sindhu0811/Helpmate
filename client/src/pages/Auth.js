@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UseAnimations from "react-useanimations";
 import visibility from "react-useanimations/lib/visibility";
 import Lottie from "lottie-react";
-import { toast } from "react-toastify"; // ✅ updated
+import { toast } from "react-toastify"; 
 
 import otpAnimation from "../assets/otp.json";
 import googleIcon from "../assets/google.png";
