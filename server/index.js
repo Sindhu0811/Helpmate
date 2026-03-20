@@ -230,39 +230,66 @@ app.get("/api/emergency-contacts", async (req, res) => {
   }
 });
 
-// 2️⃣ Add a new contact
+
 app.post("/api/emergency-contacts", async (req, res) => {
+  console.log("🔥 ADD CONTACT API HIT");
+  console.log("📦 Body received:", req.body);
+
   try {
-    const { userEmail, name, phone, relation, contactEmail } = req.body;
+    const { name, phone, relation, contactEmail, userEmail } = req.body;
 
-    if (!userEmail || !name || !phone) {
-      return res.status(400).json({ message: "Missing required fields" });
+    // Validate required fields
+    if (!name || !phone || !userEmail) {
+      console.log("❌ Missing required fields");
+      return res.status(400).json({
+        message: "Name, phone and userEmail are required",
+      });
     }
 
-    // Prevent adding self as contact
-    if (contactEmail && contactEmail.trim().toLowerCase() === userEmail.trim().toLowerCase()) {
-      return res.status(400).json({ message: "You cannot add yourself as a contact" });
-    }
-
-    // Get logged-in user's ID
-    const userRes = await pool.query("SELECT id FROM users WHERE email=$1", [userEmail]);
-    if (!userRes.rows[0]) return res.status(404).json({ message: "User not found" });
-
-    const userId = userRes.rows[0].id;
-
-    // Insert contact
-    const result = await pool.query(
-      `INSERT INTO emergency_contacts (user_id, name, phone, relation, email)
-       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [userId, name, phone, relation || "", contactEmail || null]
+    // Get user ID from users table
+    const userRes = await pool.query(
+      "SELECT id FROM users WHERE LOWER(TRIM(email)) = LOWER(TRIM($1))",
+      [userEmail]
     );
 
-    res.json({ message: "Contact added", contact: result.rows[0] });
-  } catch (err) {
-    console.error("Add contact error:", err.stack);
-    res.status(500).json({ message: "Server error" });
+    if (userRes.rows.length === 0) {
+      console.log("❌ User not found in DB");
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const userId = userRes.rows[0].id;
+    console.log("✅ User ID found:", userId);
+
+    // Insert contact
+    const insertRes = await pool.query(
+      `INSERT INTO emergency_contacts
+       (user_id, name, phone, relation, email)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id, name, phone, relation, email AS "contactEmail"`,
+      [
+        userId,
+        name.trim(),
+        phone.trim(),
+        relation || "",
+        contactEmail || null,
+      ]
+    );
+
+    console.log("✅ Contact inserted:", insertRes.rows[0]);
+
+    return res.status(201).json({
+      message: "Contact added successfully",
+      contact: insertRes.rows[0],
+    });
+
+  } catch (error) {
+    console.error("💥 ERROR adding contact:", error);
+    return res.status(500).json({
+      message: "Server error while adding contact",
+    });
   }
 });
+
 
 // 3️⃣ Update an existing contact
 app.put("/api/emergency-contacts/:id", async (req, res) => {

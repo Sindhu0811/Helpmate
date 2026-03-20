@@ -47,53 +47,68 @@ const ContactsPage = () => {
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   // ---------- Add / Update Contact ----------
-  const handleSubmit = async () => {
-    if (!formData.name || !formData.phone || !formData.email) {
-      toast.warn("⚠️ Name, Phone, and Email are required");
-      return;
-    }
-    if (!isValidPhone(formData.phone)) {
-      toast.warn("⚠️ Phone must contain 10 digits");
-      return;
-    }
-    if (!isValidEmail(formData.email)) {
-      toast.warn("⚠️ Enter a valid email");
-      return;
-    }
+ const handleSubmit = async () => {
+  if (!formData.name || !formData.phone || !formData.email) {
+    toast.warn("⚠️ Name, Phone, and Email are required");
+    return;
+  }
 
-    try {
-      if (editingId) {
-        await axios.put(
-          `http://localhost:5000/api/emergency-contacts/${editingId}`,
-          {
-            name: formData.name,
-            phone: formData.phone,
-            relation: formData.relation,
-            contactEmail: formData.email,
-          }
-        );
-        toast.success("✅ Contact updated successfully!");
-        addAlert(`Updated ${formData.name}`);
-      } else {
-        await axios.post("http://localhost:5000/api/emergency-contacts", {
-          email: userEmail,
+  if (!isValidPhone(formData.phone)) {
+    toast.warn("⚠️ Phone must contain 10 digits");
+    return;
+  }
+
+  if (!isValidEmail(formData.email)) {
+    toast.warn("⚠️ Enter a valid email");
+    return;
+  }
+
+  try {
+    if (editingId) {
+      // ✅ UPDATE CONTACT
+      await axios.put(
+        `http://localhost:5000/api/emergency-contacts/${editingId}`,
+        {
+          userEmail, // send userEmail if backend checks ownership
           name: formData.name,
           phone: formData.phone,
           relation: formData.relation,
           contactEmail: formData.email,
-        });
-        toast.success("🎉 Contact added successfully!");
-        addAlert(`Added ${formData.name}`);
-      }
+        }
+      );
 
-      setFormData({ name: "", phone: "", relation: "", email: "" });
-      setEditingId(null);
-      setShowForm(false);
-      fetchContacts();
-    } catch {
-      toast.error("⚠️ Failed to save contact");
+      toast.success("✅ Contact updated successfully!");
+      addAlert(`Updated ${formData.name}`);
+
+    } else {
+      // ✅ ADD CONTACT
+      await axios.post(
+        "http://localhost:5000/api/emergency-contacts",
+        {
+          userEmail, // ✅ IMPORTANT FIX
+          name: formData.name,
+          phone: formData.phone,
+          relation: formData.relation,
+          contactEmail: formData.email,
+        }
+      );
+
+      toast.success("🎉 Contact added successfully!");
+      addAlert(`Added ${formData.name}`);
     }
-  };
+
+    // Reset form
+    setFormData({ name: "", phone: "", relation: "", email: "" });
+    setEditingId(null);
+    setShowForm(false);
+    fetchContacts();
+
+  } catch (error) {
+    console.error("Save error:", error.response?.data || error.message);
+    toast.error("⚠️ Failed to save contact");
+  }
+};
+
 
   const handleEdit = (c) => {
     setFormData({
